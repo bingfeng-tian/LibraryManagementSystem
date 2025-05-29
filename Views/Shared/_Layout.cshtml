@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW" class="min-h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 圖書管理系統</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            width:100%;
+            flex-shrink: 0;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航列 -->
+    <nav class="bg-blue-600 p-4 shadow-md">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <a href="/" class="text-white text-xl font-bold mb-2 sm:mb-0">圖書管理系統</a>
+            <div class="flex space-x-4">
+                <a asp-controller="Books" asp-action="Index" class="text-white hover:text-gray-200 transition duration-200" aria-label="書籍清單">書籍清單</a>
+                <a asp-controller="Books" asp-action="Create" class="text-white hover:text-gray-200 transition duration-200" aria-label="新增書籍">新增書籍</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主內容區域 -->
+    <main class="container mx-auto p-6">
+        @RenderBody()
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="bg-gray-800 text-white p-4 ">
+        <div class="container mx-auto text-center">
+            <p>© @DateTime.Now.Year 圖書管理系統</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

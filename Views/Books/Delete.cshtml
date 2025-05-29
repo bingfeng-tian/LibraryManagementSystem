@@ -1,0 +1,24 @@
+﻿@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewData["Title"] = "刪除書籍";
+}
+
+<h1 class="text-2xl font-bold mb-4">刪除書籍</h1>
+
+<h3>確定要刪除這本書嗎？</h3>
+<div>
+    <h4>書名：@Model.Title</h4>
+    <p>作者：@Model.Author</p>
+    <p>ISBN：@Model.ISBN</p>
+    <p>出版日期：@Model.PublishDate.ToString("yyyy-MM-dd")</p>
+    <p>價格：@Model.Price</p>
+    <p>類別：@Model.Category</p>
+    <p>出版社：@Model.Publisher</p>
+    <form asp-action="Delete">
+        <div class="mt-4 space-x-2">
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">刪除</button>
+            <a asp-action="Index" asp-controller="Books" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">返回清單</a>
+        </div>
+    </form>
+</div>

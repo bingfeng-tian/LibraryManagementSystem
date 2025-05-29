@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Book>
+
+@{
+    ViewData["Title"] = "圖書管理系統";
+}
+
+<h1 class="text-2xl font-bold mb-4">圖書管理系統</h1>
+
+<!-- 搜尋與導航 -->
+<div class="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <form asp-action="Index" method="get" class="flex-1 mb-2 sm:mb-0">
+        <input type="text" name="searchTerm" class="p-2 border rounded w-full sm:w-auto" placeholder="搜尋書名或作者..." />
+        <button type="submit" class="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 mt-2 sm:mt-0 sm:ml-2">搜尋</button>
+    </form>
+    <div class="space-x-2">
+        <a asp-controller="Books" asp-action="Create" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">新增書籍</a>
+        <a asp-controller="Books" asp-action="Index" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">刷新清單</a>
+    </div>
+</div>
+
+<div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="w-full table-auto border-collapse text-sm text-center">
+        <thead>
+            <tr class="bg-gray-700 text-white">
+                <th class="px-4 py-2 border border-gray-300">書名</th>
+                <th class="px-4 py-2 border border-gray-300">作者</th>
+                <th class="px-4 py-2 border border-gray-300">ISBN</th>
+                <th class="px-4 py-2 border border-gray-300">出版日期</th>
+                <th class="px-4 py-2 border border-gray-300">價格</th>
+                <th class="px-4 py-2 border border-gray-300">類別</th>
+                <th class="px-4 py-2 border border-gray-300">出版社</th>
+                <th class="px-4 py-2 border border-gray-300">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr class="even:bg-gray-100">
+                    <td colspan="8" class="px-4 py-2 text-gray-500 border border-gray-300">無書籍記錄</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var book in Model)
+                {
+                    <tr class="even:bg-gray-100 hover:bg-gray-200 transition">
+                        <td class="px-4 py-2 border border-gray-300">@book.Title</td>
+                        <td class="px-4 py-2 border border-gray-300">@book.Author</td>
+                        <td class="px-4 py-2 border border-gray-300">@book.ISBN</td>
+                        <td class="px-4 py-2 border border-gray-300">@book.PublishDate.ToString("yyyy-MM-dd")</td>
+                        <td class="px-4 py-2 border border-gray-300">@book.Price</td>
+                        <td class="px-4 py-2 border border-gray-300">@book.Category</td>
+                        <td class="px-4 py-2 border border-gray-300">@book.Publisher</td>
+                        <td class="px-4 py-2 border border-gray-300 space-x-1">
+                            <a asp-action="Edit" asp-route-id="@book.Id" class="text-xs bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">編輯</a>
+                            <a asp-action="Delete" asp-route-id="@book.Id" class="text-xs bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">刪除</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
