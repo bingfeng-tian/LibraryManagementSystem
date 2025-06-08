@@ -13,7 +13,10 @@
         <button type="submit" class="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 mt-2 sm:mt-0 sm:ml-2">搜尋</button>
     </form>
     <div class="space-x-2">
-        <a asp-controller="Books" asp-action="Create" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">新增書籍</a>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-controller="Books" asp-action="Create" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">新增書籍</a>
+        }
         <a asp-controller="Books" asp-action="Index" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">刷新清單</a>
     </div>
 </div>
@@ -29,7 +32,9 @@
                 <th class="px-4 py-2 border border-gray-300">價格</th>
                 <th class="px-4 py-2 border border-gray-300">類別</th>
                 <th class="px-4 py-2 border border-gray-300">出版社</th>
-                <th class="px-4 py-2 border border-gray-300">操作</th>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
+                    <th class="px-4 py-2 border border-gray-300">操作</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -51,15 +56,19 @@
                         <td class="px-4 py-2 border border-gray-300">@book.Price</td>
                         <td class="px-4 py-2 border border-gray-300">@book.Category</td>
                         <td class="px-4 py-2 border border-gray-300">@book.Publisher</td>
-                        <td class="px-4 py-2 border border-gray-300 space-x-1">
-                            <a asp-action="Edit" asp-route-id="@book.Id" class="text-xs bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">編輯</a>
-                            <a asp-action="Delete" asp-route-id="@book.Id" class="text-xs bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">刪除</a>
-                        </td>
+                        
+                            
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td class="px-4 py-2 border border-gray-300 space-x-1">
+                                <a asp-action="Edit" asp-route-id="@book.Id" class="text-xs bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">編輯</a>
+                                <a asp-action="Delete" asp-route-id="@book.Id" class="text-xs bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">刪除</a>
+                                </td>
+                            }
+                        
                     </tr>
                 }
             }
         </tbody>
     </table>
 </div>
-
-

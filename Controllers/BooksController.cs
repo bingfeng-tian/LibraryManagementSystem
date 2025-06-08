@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization; // Add this
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -26,12 +27,14 @@ namespace LibraryManagementSystem.Controllers
         }
 
         // GET: Books/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Books/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Book book)
@@ -44,7 +47,6 @@ namespace LibraryManagementSystem.Controllers
             }
             return View(book);
         }
-
 
         // GET: Books/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -79,6 +81,7 @@ namespace LibraryManagementSystem.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -88,6 +91,7 @@ namespace LibraryManagementSystem.Controllers
         }
 
         // POST: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
